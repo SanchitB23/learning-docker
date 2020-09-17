@@ -1,0 +1,22 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t sanchitb23/learn-docker-react -f Dockerfile.dev .
+
+script:
+    - docker run -e CI=true sanchitb23/learn-docker-react npm run test
+
+deploy:
+    provider: elasticbeanstalk
+    region: "us-west-2" #region acc to aws region
+    app: "learn-docker-react" #name of app in ebs
+    env: "learn-docker-react-env" #name of env in ebs app
+    bucket_name: "adsadasdsa" #bucket name of ebs in s3
+    bucket_path: "learn-docker-react" # defualt -> empty ; name it same as app
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    
