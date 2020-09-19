@@ -1,0 +1,43 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "sanchitb23/complex-client",
+      "hostname": "client",
+      "memory": 128,
+      "essential": false
+    },
+    {
+      "name": "server",
+      "image": "sanchitb23/complex-server",
+      "hostname": "api",
+      "memory": 128,
+      "essential": false
+    },
+    {
+      "name": "worker",
+      "image": "sanchitb23/complex-worker",
+      "hostname": "worker",
+      "memory": 128,
+      "essential": false
+    },
+    {
+      "name": "nginx",
+      "image": "sanchitb23/complex-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "memory": 128,
+      "links": [
+        "client",
+        "server"
+      ]
+    }
+  ]
+}
